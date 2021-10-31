@@ -10,6 +10,7 @@ import Self from "@/views/Self.vue";
 import ChatView from "@/views/ChatView.vue";
 import Edit from "@/views/Edit.vue";
 import ActivateEmailChange from "@/views/ActivateEmailChange.vue";
+import CreateChat from "@/views/CreateChat.vue";
 
 const routes = [
   {
@@ -46,6 +47,11 @@ const routes = [
             path: "/chat/:id",
             name: "ChatID",
             component: ChatView,
+          },
+          {
+            path: "/chat/create",
+            name: "CreateChat",
+            component: CreateChat,
           },
         ],
       },

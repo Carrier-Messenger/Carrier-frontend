@@ -2,11 +2,13 @@
   <div id="chatbox">
     <div id="chat-list">
       <ChatList :chats="chats" />
+      <router-link to="/chat/create" id="create-href">Create chat</router-link>
     </div>
     <div id="current-chat">
       <router-view
         :key="$route.fullPath"
         @removechat="removeChat($event)"
+        @addchat="addChat($event)"
       ></router-view>
     </div>
   </div>
@@ -29,6 +31,9 @@ export default {
         }
       });
     },
+    addChat(chat) {
+      this.chats.unshift(chat);
+    },
   },
   data() {
     return {
@@ -50,6 +55,9 @@ export default {
 #chat-list {
   background-color: rgb(160, 160, 160);
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
 }
 
 #current-chat {
@@ -58,5 +66,10 @@ export default {
 
 div {
   height: 100%;
+}
+
+#create-href {
+  position: absolute;
+  bottom: 0%;
 }
 </style>
