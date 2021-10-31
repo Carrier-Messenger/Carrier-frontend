@@ -1,0 +1,60 @@
+<template>
+  <div class="message">
+    <div class="mine-message" v-if="message.is_mine">
+      <img
+        :src="displayMessageUrl(message.author.pfp)"
+        :alt="`Profile picture of ${message.author.full_name}`"
+      />
+      <p>I wrote at {{ message.created_at }}:</p>
+      <p>{{ message.content }}</p>
+    </div>
+    <div class="not-mine-message" v-else>
+      <img
+        :src="displayMessageUrl(message.author.pfp)"
+        :alt="`Profile picture of ${message.author.full_name}`"
+      />
+      <p>{{ message.author.full_name }} wrote at {{ message.created_at }}:</p>
+      <p>{{ message.content }}</p>
+    </div>
+  </div>
+</template>
+
+<script>
+import { DOMAIN } from "@/settings";
+
+export default {
+  name: "Message",
+  props: {
+    message: {},
+    fromWS: null,
+  },
+  data() {
+    return {
+      DOMAIN: DOMAIN,
+    };
+  },
+  methods: {
+    displayMessageUrl(url) {
+      if (this.fromWS) return DOMAIN.replace(/.$/, "") + url;
+      return url;
+    },
+  },
+};
+</script>
+
+<style scoped>
+.mine-message,
+.not-mine-message {
+  border: 2px solid #000000;
+}
+
+.mine-message {
+  text-align: right;
+}
+
+img {
+  width: 48px;
+  height: 48px;
+  display: inline;
+}
+</style>
