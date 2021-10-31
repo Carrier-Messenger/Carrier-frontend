@@ -173,6 +173,21 @@ class Chat {
         err.response;
       });
   }
+
+  static async createChat(name) {
+    return await axios
+      .post(
+        `${DOMAIN}chat/create/`,
+        { name },
+        { headers: { authorization: `Bearer ${await JWT.getToken()}` } }
+      )
+      .then((res) => {
+        return res.data;
+      })
+      .catch((err) => {
+        return err.response.data;
+      });
+  }
 }
 
 export default Chat;
