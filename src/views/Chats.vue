@@ -25,6 +25,14 @@ export default {
     ChatList,
   },
   methods: {
+    sortChats() {
+      this.chats.sort(function (a, b) {
+        return (
+          new Date(b.last_message.created_at) -
+          new Date(a.last_message.created_at)
+        );
+      });
+    },
     removeChat(id) {
       this.chats.forEach((chat, index) => {
         if (chat.id == id) {
@@ -41,6 +49,7 @@ export default {
           chat.last_message = data.message;
         }
       });
+      this.sortChats();
     },
   },
   data() {
@@ -50,6 +59,8 @@ export default {
   },
   async beforeCreate() {
     this.chats = await Chat.getChats();
+
+    this.sortChats();
   },
 };
 </script>

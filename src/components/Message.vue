@@ -13,7 +13,7 @@
         :src="displayMessageUrl(message.author.pfp)"
         :alt="`Profile picture of ${message.author.full_name}`"
       />
-      <p>{{ message.author.full_name }} wrote at {{ message.created_at }}:</p>
+      <!-- <p>{{ message.author.full_name }} wrote at {{ message.created_at }}:</p> -->
       <p>{{ message.content }}</p>
     </div>
   </div>
@@ -31,6 +31,7 @@ export default {
   data() {
     return {
       DOMAIN: DOMAIN,
+      realMessage: {},
     };
   },
   methods: {
@@ -38,6 +39,17 @@ export default {
       if (this.fromWS) return DOMAIN.replace(/.$/, "") + url;
       return url;
     },
+  },
+  mounted() {
+    this.realMessage = this.message;
+
+    this.realMessage.created_at = this.message.created_at.toLocaleTimeString(
+      "pl-PL",
+      {
+        hour: "2-digit",
+        minute: "2-digit",
+      }
+    );
   },
 };
 </script>

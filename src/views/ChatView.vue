@@ -102,11 +102,12 @@ export default {
       }/?token=${await JWT.getToken()}`
     );
     this.socket.onmessage = (e) => {
-      const messageJSON = JSON.parse(e.data);
-      this.WSMessages.push(messageJSON);
+      let message = JSON.parse(e.data);
+      message.created_at = new Date(message.created_at);
+      this.WSMessages.push(message);
       this.$emit("changelastmessage", {
         id: this.chat.id,
-        message: messageJSON,
+        message: message,
       });
     };
     this.socket.onclose = () => {
@@ -117,6 +118,10 @@ export default {
     this.messages = (
       await Chat.getChatMessagesFirst(this.$route.params.id, 0, this.limit)
     ).reverse();
+
+    this.messages.forEach((message) => {
+      message.created_at = new Date(message.created_at);
+    });
 
     if (this.messages.length < this.limit) {
       this.loadedAll = true;
