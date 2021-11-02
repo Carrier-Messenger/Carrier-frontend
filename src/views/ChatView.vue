@@ -73,7 +73,7 @@ export default {
     async deleteChat() {
       Chat.delete(this.$route.params.id);
       this.$router.push({ name: "ChatView" });
-      this.$emit("removechat", this.$route.params.id); 
+      this.$emit("removechat", this.$route.params.id);
     },
     async loadMoreMessages() {
       const newMessages = (
@@ -104,6 +104,10 @@ export default {
     this.socket.onmessage = (e) => {
       const messageJSON = JSON.parse(e.data);
       this.WSMessages.push(messageJSON);
+      this.$emit("changelastmessage", {
+        id: this.chat.id,
+        message: messageJSON,
+      });
     };
     this.socket.onclose = () => {
       alert("You have problems with internet connection.");

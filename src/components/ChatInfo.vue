@@ -2,7 +2,13 @@
   <div class="chat-info">
     <router-link :to="`/chat/${chat.id}`">
       <img :src="chat.image" :alt="`Image of ${chat.name}`" />
-      <p>{{ chat.name }}</p>
+      <div>
+        <p>{{ chat.name }}</p>
+        <p v-if="chat.last_message">
+          {{ chat.last_message.author.first_name }}:
+          {{ chat.last_message.content }}
+        </p>
+      </div>
     </router-link>
   </div>
 </template>

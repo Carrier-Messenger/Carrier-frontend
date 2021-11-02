@@ -1,5 +1,6 @@
 <template>
   <div id="friend-list">
+    <h2>Invitations:</h2>
     <FriendInvitationInfo
       v-for="(invitation, index) in invitations"
       :key="index"

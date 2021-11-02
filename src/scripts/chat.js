@@ -113,7 +113,6 @@ class Chat {
         data: { user: userId },
       })
       .catch((err) => {
-        console.log(err.response);
         return err.response;
       });
   }

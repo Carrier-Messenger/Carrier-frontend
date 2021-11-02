@@ -1,6 +1,11 @@
 <template>
   <div class="invitation" ref="invitation">
-    <p>{{ invitation.sender.full_name }} wants to be your friend:</p>
+    <p>
+      <router-link :to="`/user/${invitation.sender.id}`">{{
+        invitation.sender.full_name
+      }}</router-link>
+      wants to be your friend:
+    </p>
     <button @click="accept">Accept</button>
     <button @click="reject">Reject</button>
   </div>

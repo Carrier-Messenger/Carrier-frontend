@@ -9,6 +9,7 @@
         :key="$route.fullPath"
         @removechat="removeChat($event)"
         @addchat="addChat($event)"
+        @changelastmessage="changelastmessage($event)"
       ></router-view>
     </div>
   </div>
@@ -33,6 +34,13 @@ export default {
     },
     addChat(chat) {
       this.chats.unshift(chat);
+    },
+    changelastmessage(data) {
+      this.chats.forEach((chat) => {
+        if (chat.id == data.id) {
+          chat.last_message = data.message;
+        }
+      });
     },
   },
   data() {
