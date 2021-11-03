@@ -37,7 +37,8 @@
 <script>
 import User from "@/scripts/user.js";
 import JWT from "@/scripts/jwt.js";
-import Friend from "@/scripts/friend.js"
+import Friend from "@/scripts/friend.js";
+import jwt_decode from "jwt-decode";
 
 export default {
   name: "User",
@@ -47,7 +48,7 @@ export default {
       logged: false,
     };
   },
-  methods:{
+  methods: {
     invite() {
       Friend.invite(this.user.id);
       this.user.friend_type = "invited";
@@ -67,12 +68,15 @@ export default {
     reject() {
       Friend.reject(this.user.id);
       this.user.friend_type = "none";
-    }
+    },
   },
   async mounted() {
     this.logged = JWT.isLogged();
 
     this.user = await User.getUserInfo(this.$route.params.id);
+
+    if (this.user.id === jwt_decode(JWT.getRawToken()).user_id)
+      this.$router.push({ name: "Self" });
   },
 };
 </script>

@@ -58,6 +58,7 @@ export default {
 .mine-message,
 .not-mine-message {
   border: 2px solid #000000;
+  padding: 5px;
 }
 
 .mine-message {

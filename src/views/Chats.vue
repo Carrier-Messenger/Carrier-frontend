@@ -27,10 +27,11 @@ export default {
   methods: {
     sortChats() {
       this.chats.sort(function (a, b) {
-        return (
-          new Date(b.last_message.created_at) -
-          new Date(a.last_message.created_at)
-        );
+        if (a.last_message && b.last_message)
+          return (
+            new Date(b.last_message.created_at) -
+            new Date(a.last_message.created_at)
+          );
       });
     },
     removeChat(id) {
@@ -61,6 +62,10 @@ export default {
     this.chats = await Chat.getChats();
 
     this.sortChats();
+
+    if (this.chats.length !== 0) {
+      this.$router.push({ name: "ChatID", params: { id: this.chats[0].id } });
+    }
   },
 };
 </script>
