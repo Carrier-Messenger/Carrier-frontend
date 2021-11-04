@@ -18,6 +18,8 @@
 <script>
 import ChatList from "@/components/ChatList.vue";
 import Chat from "@/scripts/chat";
+import JWT from "@/scripts/jwt";
+import { WSDOMAIN } from "@/settings.js";
 
 export default {
   name: "ChatBox",
@@ -66,6 +68,25 @@ export default {
     if (this.chats.length !== 0) {
       this.$router.push({ name: "ChatID", params: { id: this.chats[0].id } });
     }
+
+    this.chats.forEach(async (chat) => {
+      const socket = new WebSocket(
+        `${WSDOMAIN}ws/chat/${chat.id}/?token=${await JWT.getToken()}`
+      );
+      
+      socket.onmessage = (e) => {
+        let message = JSON.parse(e.data);
+        message.created_at = new Date(message.created_at);
+
+        this.chats.forEach((createdChat) => {
+          if (createdChat.id == chat.id) {
+            createdChat.last_message = message;
+          }
+        });
+
+        this.sortChats();
+      };
+    });
   },
 };
 </script>

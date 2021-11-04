@@ -57,6 +57,7 @@ export default {
       lastMessage: 0,
 
       loadedAll: false,
+      wsDisconnected: false,
 
       socket: WebSocket,
     };
@@ -112,7 +113,7 @@ export default {
     };
     this.socket.onclose = () => {
       alert("You have problems with internet connection.");
-      this.$router.push({ name: "ChatView" });
+      this.$router.push({ name: "Self" });
     };
 
     this.messages = (

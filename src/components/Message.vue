@@ -13,7 +13,7 @@
         :src="displayMessageUrl(message.author.pfp)"
         :alt="`Profile picture of ${message.author.full_name}`"
       />
-      <!-- <p>{{ message.author.full_name }} wrote at {{ message.created_at }}:</p> -->
+      <p>{{ message.author.full_name }} wrote at {{ message.created_at }}:</p>
       <p>{{ message.content }}</p>
     </div>
   </div>

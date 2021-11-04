@@ -51,6 +51,7 @@
         name="avatar"
         accept="image/png, image/jpg, image/jpeg"
         @change="addFile"
+        ref="fileupload"
       /><br />
     </ul>
     <button @click="submit">Submit</button> <br />
@@ -91,6 +92,14 @@ export default {
       this.message = "";
     },
     addFile(event) {
+      const allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
+
+      if (!allowedExtensions.exec(event.target.files[0].name)) {
+        this.$refs.fileupload.value = null;
+        this.message = "Invalid file type";
+        return;
+      }
+
       this.formData = new FormData();
       this.formData.append("pfp", event.target.files[0]);
     },
