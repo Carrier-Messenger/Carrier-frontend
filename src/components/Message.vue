@@ -7,6 +7,12 @@
       />
       <p>I wrote at {{ message.created_at }}:</p>
       <p>{{ message.content }}</p>
+      <img
+        v-for="(image, index) in message.images"
+        :src="displayMessageUrl(image.url)"
+        :alt="`img-${index}`"
+        :key="index"
+      />
     </div>
     <div class="not-mine-message" v-else>
       <img
@@ -15,6 +21,12 @@
       />
       <p>{{ message.author.full_name }} wrote at {{ message.created_at }}:</p>
       <p>{{ message.content }}</p>
+      <img
+        v-for="(image, index) in message.images"
+        :src="displayMessageUrl(image.url)"
+        :alt="`img-${index}`"
+        :key="index"
+      />
     </div>
   </div>
 </template>

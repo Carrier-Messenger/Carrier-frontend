@@ -20,11 +20,23 @@
       />
       <div id="input">
         <input type="text" v-model="message" />
+        <input
+          type="file"
+          id="images"
+          accept="image/png, image/jpg, image/jpeg"
+          @change="addFile"
+          ref="fileupload"
+          multiple
+        />
         <button @click="sendMessage">Send</button>
       </div>
     </div>
     <div id="user-section">
-      <UserList :chat="chat" />
+      <UserList
+        :chat="chat"
+        @addAdmin="addAdmin($event)"
+        @removeAdmin="removeAdmin($event)"
+      />
       <button @click="leave">Leave chat</button>
       <button @click="deleteChat" v-if="chat.is_admin">Delete chat</button>
     </div>
@@ -51,20 +63,55 @@ export default {
       WSMessages: [],
 
       message: "",
+      images: [],
+      base64: [],
 
       offset: 0,
       limit: LIMIT,
       lastMessage: 0,
 
       loadedAll: false,
-      wsDisconnected: false,
 
       socket: WebSocket,
     };
   },
   methods: {
+    onAllEneded() {
+      if (this.base64.length === this.images.length) {
+        this.socket.send(
+          JSON.stringify({ message: this.message, images: this.base64 })
+        );
+        this.$refs.fileupload.value = null;
+        this.base64 = [];
+      }
+    },
     sendMessage() {
-      this.socket.send(JSON.stringify({ message: this.message }));
+      if (this.images.length <= 0) {
+        this.socket.send(JSON.stringify({ message: this.message }));
+        return;
+      }
+
+      for (let image of this.images) {
+        const reader = new FileReader();
+
+        let rawImg;
+        reader.onloadend = () => {
+          rawImg = reader.result;
+          this.base64.push(rawImg);
+          this.onAllEneded();
+        };
+        reader.readAsDataURL(image);
+      }
+    },
+    addFile(event) {
+      const allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
+
+      if (!allowedExtensions.exec(event.target.files[0].name)) {
+        this.$refs.fileupload.value = null;
+        return;
+      }
+
+      this.images = event.target.files;
     },
     async leave() {
       Chat.leave(this.$route.params.id);
@@ -92,6 +139,14 @@ export default {
 
       this.messages = newMessages.concat(this.messages);
       this.offset += this.limit;
+    },
+    removeAdmin(id) {
+      const user = this.chat.users.find((user) => user.id === id);
+      this.chat.creators.splice(this.chat.creators.indexOf(user), 1);
+    },
+    addAdmin(id) {
+      const user = this.chat.users.find((user) => user.id === id);
+      this.chat.creators.push(user);
     },
   },
   async beforeCreate() {
