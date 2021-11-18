@@ -6,11 +6,11 @@
     />
     <p>{{ invitation.chatroom.name }}</p>
     <p>From {{ invitation.sender.full_name }}</p>
-    <button @click="accept">
-      <p>Accept</p>
+    <button class="adminLink" @click="accept">
+      Accept
     </button>
-    <button @click="reject">
-      <p>Reject</p>
+    <button class="adminLink" @click="reject">
+      Reject
     </button>
   </div>
 </template>
@@ -37,8 +37,4 @@ export default {
 </script>
 
 <style scoped>
-img {
-  width: 48px;
-  height: 48px;
-}
 </style>

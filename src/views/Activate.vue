@@ -1,9 +1,14 @@
 <template>
-  <div id="activate">
-    <input type="text" v-model="code" />
-    <button @click="activate">Submit</button>
-
+  <div class="backgroundLogin">
+  <h1 class="logo">CARRIER</h1>
+  <div class="shape1"></div>
+    <div id="activate">
+    <h3 id="activateText">Enter Code</h3>
+      <input type="text" v-model="code" /><br/>
+      <button @click="activate" class="btnLogin">Submit</button>
+    </div>
     <p id="error" v-if="message">{{ message }}</p>
+  <div class="shape2"></div>
   </div>
 </template>
 

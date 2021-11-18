@@ -4,17 +4,31 @@
       <img
         :src="displayMessageUrl(message.author.pfp)"
         :alt="`Profile picture of ${message.author.full_name}`"
+        class="messagePic"
       />
-      <p>I wrote at {{ message.created_at }}:</p>
+      <p class="messageInfo">I wrote at {{ message.created_at }}:</p>
       <p>{{ message.content }}</p>
+      <img
+        v-for="(image, index) in message.images"
+        :src="displayMessageUrl(image.url)"
+        :alt="`img-${index}`"
+        :key="index"
+      />
     </div>
     <div class="not-mine-message" v-else>
       <img
         :src="displayMessageUrl(message.author.pfp)"
         :alt="`Profile picture of ${message.author.full_name}`"
+        class="messagePic"
       />
-      <p>{{ message.author.full_name }} wrote at {{ message.created_at }}:</p>
+      <p class="messageInfo">{{ message.author.full_name }} wrote at {{ message.created_at }}:</p>
       <p>{{ message.content }}</p>
+      <img
+        v-for="(image, index) in message.images"
+        :src="displayMessageUrl(image.url)"
+        :alt="`img-${index}`"
+        :key="index"
+      />
     </div>
   </div>
 </template>
@@ -55,19 +69,4 @@ export default {
 </script>
 
 <style scoped>
-.mine-message,
-.not-mine-message {
-  border: 2px solid #000000;
-  padding: 5px;
-}
-
-.mine-message {
-  text-align: right;
-}
-
-img {
-  width: 48px;
-  height: 48px;
-  display: inline;
-}
 </style>

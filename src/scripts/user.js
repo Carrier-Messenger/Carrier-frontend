@@ -5,7 +5,7 @@ import JWT from "./jwt";
 class User {
   static async searchUser(name) {
     if (JWT.isLogged())
-      return await axios.get(`${DOMAIN}user/by-name/?name=${name}`, {
+      return await axios.get(`${DOMAIN}user/by-name/?name=${name}&limit=10`, {
         headers: { authorization: `Bearer ${await JWT.getToken()}` },
       });
 

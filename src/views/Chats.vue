@@ -2,7 +2,8 @@
   <div id="chatbox">
     <div id="chat-list">
       <ChatList :chats="chats" />
-      <router-link to="/chat/create" id="create-href">Create chat</router-link>
+      <router-link 
+        class="link createLink" to="/chat/create" id="create-href">Create chat</router-link>
     </div>
     <div id="current-chat">
       <router-view
@@ -92,29 +93,4 @@ export default {
 </script>
 
 <style scoped>
-#chatbox {
-  display: flex;
-  height: calc(100vh - 48px);
-}
-
-#chat-list {
-  background-color: rgb(160, 160, 160);
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  overflow-x: hidden;
-}
-
-#current-chat {
-  flex: 6;
-}
-
-div {
-  height: 100%;
-}
-
-#create-href {
-  position: absolute;
-  bottom: 0%;
-}
 </style>

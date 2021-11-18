@@ -2,7 +2,7 @@
   <div id="create">
     <label for="name"></label><br />
     <input id="name" type="text" v-model="name" @keyup="clearError" /><br />
-    <button @click="create()">Create</button>
+    <button class="linkBlack" @click="create()">Create</button>
     <p ref="error" id="error" v-if="message">{{ message }}</p>
   </div>
 </template>
@@ -47,7 +47,4 @@ export default {
 </script>
 
 <style scoped>
-#error {
-  color: red;
-}
 </style>

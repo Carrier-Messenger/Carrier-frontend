@@ -1,26 +1,25 @@
 <template>
-  <div class="user" v-if="user">
+  <div class="userNew" v-if="user">
     <div id="pfpdiv">
       <img
         :src="user.pfp"
         :alt="`${user.full_name} profile picture`"
-        id="pfp"
+        id="Userpfp"
       />
     </div>
-    <div id="info">
-      <h2>{{ user.full_name }}</h2>
+    <div id="userContent">
+      <h1>{{ user.full_name }}</h1>
       <h4>Also known as:</h4>
       <h2>{{ user.username }}</h2>
-    </div>
-    <div v-if="logged" id="buttons">
-      <button v-if="user.friend_type === 'friend'" @click="remove">
-        <p>Unfriend</p>
+      <div v-if="logged" id="buttons">
+      <button class="linkBlack" v-if="user.friend_type === 'friend'" @click="remove">
+        Unfriend
       </button>
-      <button v-if="user.friend_type === 'none'" @click="invite">
-        <p>Invite</p>
+      <button class="linkBlack" v-if="user.friend_type === 'none'" @click="invite">
+        Invite
       </button>
-      <button v-if="user.friend_type === 'invited'" @click="cancel">
-        <p>Cancel request</p>
+      <button class="linkBlack" v-if="user.friend_type === 'invited'" @click="cancel">
+        Cancel request
       </button>
       <div v-if="user.friend_type === 'requested'">
         <button @click="accept">
@@ -31,6 +30,8 @@
         </button>
       </div>
     </div>
+    </div>
+    
   </div>
 </template>
 

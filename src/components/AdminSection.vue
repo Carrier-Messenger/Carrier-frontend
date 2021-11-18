@@ -1,33 +1,34 @@
 <template>
   <div id="admin-section">
-    <input type="text" v-model="userName" @keyup="updateUserSearch" />
+    <input class="adminInput" type="text" v-model="userName" @keyup="updateUserSearch" />
+    <div class="adminUnderline"></div>
     <div id="results" ref="results">
       <div class="user" v-for="(user, index) in results" :key="index">
         <div v-if="user.is_me"></div>
         <div v-else-if="user.is_invited">
-          <router-link :to="`/user/${user.id}`">
+          <router-link class="link" :to="`/user/${user.id}`">
             <p>{{ user.full_name }}</p>
           </router-link>
-          <button @click="cancel(user.id)">Cancel request</button>
+          <button class="adminLink" @click="cancel(user.id)">Cancel request</button>
         </div>
         <div v-else-if="user.is_admin">
-          <router-link :to="`/user/${user.id}`">
+          <router-link class="link" :to="`/user/${user.id}`">
             <p>{{ user.full_name }}</p>
           </router-link>
-          <button @click="removeAdmin(user.id)">Make him/her non-admin</button>
+          <button class="adminLink" @click="removeAdmin(user.id)">Make him/her non-admin</button>
         </div>
         <div v-else-if="user.is_member">
-          <router-link :to="`/user/${user.id}`">
+          <router-link class="link"  :to="`/user/${user.id}`">
             <p>{{ user.full_name }}</p>
           </router-link>
-          <button @click="kickOut(user.id)">Kick out</button>
-          <button @click="makeAdmin(user.id)">Make him/her admin</button>
+          <button class="adminLink" @click="kickOut(user.id)">Kick out</button>
+          <button class="adminLink"  @click="makeAdmin(user.id)">Make him/her admin</button>
         </div>
         <div v-else>
-          <router-link :to="`/user/${user.id}`">
+          <router-link class="link" :to="`/user/${user.id}`">
             <p>{{ user.full_name }}</p>
           </router-link>
-          <button @click="invite(user.id)">Invite</button>
+          <button class="adminLink"  @click="invite(user.id)">Invite</button>
         </div>
       </div>
     </div>

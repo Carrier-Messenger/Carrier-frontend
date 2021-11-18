@@ -1,7 +1,9 @@
 <template>
-  <div id="login">
-    <div id="inlogin">
-      <h1>Login</h1>
+  <div class="backgroundLogin">
+  <h1 class="logo">CARRIER</h1>
+    <div class="shape1"></div>
+    <div id="inLogin">
+      <h1 id="loginTitle">Login</h1>
       <form @submit.prevent="login">
         <label for="email">E-mail:</label><br />
         <input
@@ -19,12 +21,13 @@
           v-model="password"
           @keyup="clearError"
         /><br />
-        <button>Submit</button>
+        <button class="btnLogin">Submit</button>
       </form>
       <p id="error" v-if="message">{{ message }}</p>
-      <router-link to="/register">I want to register</router-link>
-      <router-link to="/activate">I want to activate my account</router-link>
+      <router-link to="/register" class="link">I want to register</router-link> <br/>
+      <router-link to="/activate" class="link">I want to activate my account</router-link>
     </div>
+    <div class="shape2"></div>
   </div>
 </template>
 
@@ -67,30 +70,5 @@ export default {
 </script>
 
 <style scoped>
-#login {
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-
-#inlogin {
-  text-align: center;
-  border-radius: 30%;
-  border: black 1px solid;
-  padding: 50px;
-}
-
-a {
-  display: block;
-}
-
-button {
-  margin: 10px 0px 10px 0px;
-}
-
-form {
-  text-align: center;
-}
+  @import '../Main.css';
 </style>

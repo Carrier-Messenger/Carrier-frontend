@@ -1,5 +1,5 @@
 <template>
-  <div id="friend-list">
+  <div id="friendList">
     <h2>Invitations:</h2>
     <FriendInvitationInfo
       v-for="(invitation, index) in invitations"

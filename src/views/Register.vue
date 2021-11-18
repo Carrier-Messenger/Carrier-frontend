@@ -1,4 +1,7 @@
 <template>
+<div class="backgroundLogin">
+  <h1 class="logo">CARRIER</h1>
+  <div class="shape1"></div>
   <div id="register">
     <h1>Registration</h1>
     <form @submit.prevent="register">
@@ -50,12 +53,14 @@
         v-model="repeatPassword"
         @keyup="clearError"
       /><br />
-      <button>Submit</button>
+      <button class="btnLogin">Submit</button>
     </form>
     <p id="error" v-if="message">{{ message }}</p>
-    <router-link to="/login">Already a user</router-link>
-    <router-link to="/activate">I want to activate my account</router-link>
+    <router-link to="/login" class="link">Already a user</router-link><br/>
+    <router-link to="/activate" class="link">I want to activate my account</router-link>
   </div>
+  <div class="shape2"></div>
+</div>
 </template>
 
 <script>

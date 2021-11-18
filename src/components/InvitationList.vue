@@ -21,11 +21,4 @@ export default {
 </script>
 
 <style scoped>
-li {
-  display: flex;
-}
-
-li {
-  list-style-type: none;
-}
 </style>

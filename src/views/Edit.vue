@@ -1,5 +1,6 @@
 <template>
-  <div id="edit-user" v-if="user">
+  <div id="edit-user" class="backgroundMain" v-if="user">
+  <div  class="edit">
     <ul>
       <label for="email">Change email:</label>
       <br />
@@ -43,22 +44,20 @@
         v-model="repeatPassword"
         @keyup="clearErrors"
       /><br />
-      <label for="pfp">Change profile picture</label
+      <label for="editPfp">Change profile picture</label
       ><br />
       <input
         type="file"
-        id="pfp"
+        id="editPfp"
         name="avatar"
         accept="image/png, image/jpg, image/jpeg"
         @change="addFile"
-        ref="fileupload"
-      /><br />
+      />
     </ul>
-    <button @click="submit">Submit</button> <br />
+    <button @click="submit" class="btnLogin">Submit</button> <br />
     <p id="error" v-if="message">{{ message }}</p>
-    <router-link to="/activate/change"
-      >I already have e-mail change code</router-link
-    >
+    <router-link to="/activate/change" class="link">I already have e-mail change code</router-link>
+    </div>
   </div>
 </template>
 
@@ -92,14 +91,6 @@ export default {
       this.message = "";
     },
     addFile(event) {
-      const allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
-
-      if (!allowedExtensions.exec(event.target.files[0].name)) {
-        this.$refs.fileupload.value = null;
-        this.message = "Invalid file type";
-        return;
-      }
-
       this.formData = new FormData();
       this.formData.append("pfp", event.target.files[0]);
     },
@@ -168,11 +159,4 @@ export default {
 </script>
 
 <style scoped>
-#edit-user {
-  text-align: center;
-}
-
-#error {
-  color: rgb(255, 0, 0);
-}
 </style>
