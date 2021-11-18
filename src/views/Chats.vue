@@ -29,7 +29,7 @@ export default {
   },
   methods: {
     sortChats() {
-      this.chats.sort(function (a, b) {
+      this.chats.sort((a, b) => {
         if (a.last_message && b.last_message)
           return (
             new Date(b.last_message.created_at) -

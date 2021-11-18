@@ -2,7 +2,12 @@
   <div id="chat" v-if="chat" ref="chat">
     <div id="messages" ref="messages">
       <h1 class="chatTitle">Welcome in {{ chat.name }}</h1>
-      <button id="load-more" @click="loadMoreMessages" v-if="!loadedAll" class="linkBlack">
+      <button
+        id="load-more"
+        @click="loadMoreMessages"
+        v-if="!loadedAll"
+        class="linkBlack"
+      >
         Load more messages
       </button>
       <p v-else>Looks like there are no more messages</p>
@@ -19,10 +24,10 @@
         :fromWS="true"
       />
       <div id="input">
-        <input type="text" v-model="message" @keyup.enter="sendMessage"/>
-         <input
-         title=" "
-         value=""
+        <input type="text" v-model="message" @keyup.enter="sendMessage" />
+        <input
+          title=" "
+          value=""
           class="sendFile"
           type="file"
           id="images"
@@ -39,9 +44,13 @@
         :chat="chat"
         @addAdmin="addAdmin($event)"
         @removeAdmin="removeAdmin($event)"
+        @removeUser="removeUser($event)"
       />
+      <div style="margin-top: 50px"></div>
       <button @click="leave" class="linkBlack">Leave chat</button>
-      <button @click="deleteChat" v-if="chat.is_admin" class="linkBlack">Delete chat</button>
+      <button @click="deleteChat" v-if="chat.is_admin" class="linkBlack">
+        Delete chat
+      </button>
     </div>
   </div>
 </template>
@@ -89,7 +98,7 @@ export default {
       }
     },
     sendMessage() {
-       if (this.images.length <= 0) {
+      if (this.images.length <= 0) {
         this.socket.send(JSON.stringify({ message: this.message }));
         return;
       }
@@ -142,14 +151,32 @@ export default {
     },
     removeAdmin(id) {
       const user = this.chat.users.find((user) => user.id === id);
-      this.chat.creators.splice(this.chat.creators.indexOf(user), 1);
+      this.chat.users.find((user) => user.id === id).is_admin = false;
+      this.chat.creators.find((user) => user.id === id).is_admin = false;
+      this.chat.creators.splice(
+        this.chat.creators.indexOf(user),
+        1
+      );
     },
     addAdmin(id) {
       const user = this.chat.users.find((user) => user.id === id);
       this.chat.creators.push(user);
+      this.chat.users.find((user) => user.id === id).is_admin = true;
+    },
+    removeUser(id) {
+      const user = this.chat.users.find((user) => user.id === id);
+
+      this.chat.users.splice(this.chat.users.indexOf(user), 1);
+
+      if (this.chat.creators.includes(user)) {
+        this.chat.creators.splice(
+          this.chat.creators.indexOf(user),
+          1
+        );
+      }
     },
   },
-  
+
   async mounted() {
     this.chat = await Chat.getChatInfo(this.$route.params.id);
 
@@ -188,7 +215,6 @@ export default {
     this.lastMessage = this.messages[this.messages.length - 1].id;
     this.offset += this.limit;
     //this.$refs.messages.scrollTop = this.$refs.messages.scrollHeight;
-
   },
 };
 </script>
